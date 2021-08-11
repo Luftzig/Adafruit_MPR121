@@ -73,6 +73,11 @@ enum {
   MPR121_GPIOTOGGLE = 0x7A,
 
   MPR121_SOFTRESET = 0x80,
+
+
+  MPR121_ECR_SETTING =
+    B10000000 + 12 // 5 bits for baseline tracking & proximity disabled + X
+    // amount of electrodes running (12)
 };
 
 //.. thru to 0x1C/0x1D
@@ -87,8 +92,9 @@ public:
   Adafruit_MPR121();
 
   bool begin(uint8_t i2caddr = MPR121_I2CADDR_DEFAULT, TwoWire *theWire = &Wire,
-             uint8_t touchThreshold = MPR121_TOUCH_THRESHOLD_DEFAULT,
-             uint8_t releaseThreshold = MPR121_RELEASE_THRESHOLD_DEFAULT);
+               uint8_t touchThreshold = MPR121_TOUCH_THRESHOLD_DEFAULT,
+               uint8_t releaseThreshold = MPR121_RELEASE_THRESHOLD_DEFAULT,
+               uint8_t ecrConfig = MPR121_ECR_SETTING);
 
   uint16_t filteredData(uint8_t t);
   uint16_t baselineData(uint8_t t);

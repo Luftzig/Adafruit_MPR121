@@ -50,7 +50,8 @@ Adafruit_MPR121::Adafruit_MPR121() {}
  *  @returns  true on success, false otherwise
  */
 bool Adafruit_MPR121::begin(uint8_t i2caddr, TwoWire *theWire,
-                            uint8_t touchThreshold, uint8_t releaseThreshold) {
+                            uint8_t touchThreshold, uint8_t releaseThreshold,
+                            uint8_t ecrConfig) {
 
   if (i2c_dev) {
     delete i2c_dev;
@@ -105,10 +106,7 @@ bool Adafruit_MPR121::begin(uint8_t i2caddr, TwoWire *theWire,
 #endif
 
   // enable X electrodes and start MPR121
-  byte ECR_SETTING =
-      B10000000 + 12; // 5 bits for baseline tracking & proximity disabled + X
-                      // amount of electrodes running (12)
-  writeRegister(MPR121_ECR, ECR_SETTING); // start with above ECR setting
+  writeRegister(MPR121_ECR, ecrConfig); // start with above ECR setting
 
   return true;
 }
